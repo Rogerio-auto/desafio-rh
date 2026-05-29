@@ -3,12 +3,12 @@ id: F1-S01
 title: Schema documents para upload async (status + error + processed_at)
 phase: F1
 task_ref: null
-status: in-progress
+status: review
 priority: high
 estimated_size: XS
 agent_id: null
 claimed_at: 2026-05-29T19:43:58Z
-completed_at: null
+completed_at: 2026-05-29T19:47:23Z
 pr_url: null
 depends_on: []
 blocks:
