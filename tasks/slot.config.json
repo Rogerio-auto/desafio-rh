@@ -1,0 +1,37 @@
+{
+  "_comment": "Stack: Next.js 15 (App Router, single-package) + TypeScript strict + Drizzle + pgvector. Paths reais batem na arvore src/ deste repo.",
+
+  "specialists": {
+    "default": "backend-engineer",
+    "patterns": [
+      { "pattern": "^src/server/db/", "specialist": "db-schema-engineer" },
+      { "pattern": "^src/server/", "specialist": "backend-engineer" },
+      { "pattern": "^src/scripts/", "specialist": "backend-engineer" },
+      { "pattern": "^src/lib/", "specialist": "backend-engineer" },
+      { "pattern": "^src/app/api/", "specialist": "backend-engineer" },
+      { "pattern": "^src/app/", "specialist": "frontend-engineer" },
+      { "pattern": "^src/components/", "specialist": "frontend-engineer" },
+      { "pattern": "^tests/", "specialist": "qa-tester" }
+    ],
+    "phase_fallback": {}
+  },
+
+  "phases": {
+    "F0": "Fundacao (init + RAG multi-tenant)",
+    "F1": "Proximas features"
+  },
+
+  "migrations": {
+    "enabled": true,
+    "path": "src/server/db/migrations",
+    "journal_path": "src/server/db/migrations/meta/_journal.json"
+  },
+
+  "review_checks": {
+    "disabled": []
+  },
+
+  "validation": {
+    "auto_link_node_modules": true
+  }
+}

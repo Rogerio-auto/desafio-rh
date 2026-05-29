@@ -1,0 +1,34 @@
+{
+  "_comment": "Copie para slot.config.json e ajuste. Tudo é opcional — slot.py tem defaults sensatos. Documentação dos campos em scripts/slot.py.",
+
+  "specialists": {
+    "default": "backend-engineer",
+    "patterns": [
+      { "pattern": "^apps/api/src/db/", "specialist": "db-schema-engineer" },
+      { "pattern": "^apps/api/", "specialist": "backend-engineer" },
+      { "pattern": "^packages/shared-", "specialist": "backend-engineer" },
+      { "pattern": "^apps/web/", "specialist": "frontend-engineer" },
+      { "pattern": "^apps/.*-py/|^apps/langgraph-|^services/.*-py/", "specialist": "python-engineer" }
+    ],
+    "phase_fallback": {}
+  },
+
+  "phases": {
+    "F0": "Fundação",
+    "F1": "Base operacional"
+  },
+
+  "migrations": {
+    "enabled": false,
+    "path": "apps/api/src/db/migrations",
+    "journal_path": "apps/api/src/db/migrations/meta/_journal.json"
+  },
+
+  "review_checks": {
+    "disabled": []
+  },
+
+  "validation": {
+    "auto_link_node_modules": true
+  }
+}

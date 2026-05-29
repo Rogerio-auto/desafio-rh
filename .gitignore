@@ -1,0 +1,53 @@
+# dependencies
+/node_modules
+/.pnp
+.pnp.*
+.yarn/*
+!.yarn/patches
+!.yarn/plugins
+!.yarn/releases
+!.yarn/versions
+
+# next.js
+/.next/
+/out/
+*.tsbuildinfo
+next-env.d.ts
+
+# production
+/build
+/dist
+
+# testing
+/coverage
+
+# environments — NEVER commit real secrets
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+.env.*.local
+
+# logs (excludes runtime logs but keeps example fixtures)
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
+logs/
+!logs-exemplo/
+
+# editor / OS
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# misc
+.cache/
+*.tgz
+
+# claude code runtime state (agent definitions in .claude/agents and skills in .claude/skills ARE tracked)
+.claude/scheduled_tasks.lock
+.claude/settings.local.json
+.claude/.cache/
