@@ -1,5 +1,5 @@
 ---
-id: F1-S05-page-integration
+id: F1-S05
 title: Integrar upload na page principal + ADR + README
 phase: F1
 task_ref: null
@@ -11,7 +11,7 @@ claimed_at: null
 completed_at: null
 pr_url: null
 depends_on:
-  - F1-S04-upload-ui
+  - F1-S04
 blocks: []
 source_docs:
   - PRD.md

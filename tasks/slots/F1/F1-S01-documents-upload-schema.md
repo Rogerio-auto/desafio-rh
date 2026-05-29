@@ -1,5 +1,5 @@
 ---
-id: F1-S01-documents-upload-schema
+id: F1-S01
 title: Schema documents para upload async (status + error + processed_at)
 phase: F1
 task_ref: null
@@ -12,7 +12,7 @@ completed_at: null
 pr_url: null
 depends_on: []
 blocks:
-  - F1-S02-ingest-buffer
+  - F1-S02
 source_docs:
   - PRD.md
   - ARCHITECTURE.md

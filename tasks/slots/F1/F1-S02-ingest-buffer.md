@@ -1,5 +1,5 @@
 ---
-id: F1-S02-ingest-buffer
+id: F1-S02
 title: Expor ingestBuffer e reaproveitar pipeline na CLI
 phase: F1
 task_ref: null
@@ -11,9 +11,9 @@ claimed_at: null
 completed_at: null
 pr_url: null
 depends_on:
-  - F1-S01-documents-upload-schema
+  - F1-S01
 blocks:
-  - F1-S03-documents-api
+  - F1-S03
 source_docs:
   - PRD.md
   - ARCHITECTURE.md

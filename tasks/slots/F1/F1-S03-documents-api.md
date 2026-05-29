@@ -1,5 +1,5 @@
 ---
-id: F1-S03-documents-api
+id: F1-S03
 title: API /api/documents (POST upload + GET listagem por tenant)
 phase: F1
 task_ref: null
@@ -11,9 +11,9 @@ claimed_at: null
 completed_at: null
 pr_url: null
 depends_on:
-  - F1-S02-ingest-buffer
+  - F1-S02
 blocks:
-  - F1-S04-upload-ui
+  - F1-S04
 source_docs:
   - PRD.md
   - ARCHITECTURE.md
