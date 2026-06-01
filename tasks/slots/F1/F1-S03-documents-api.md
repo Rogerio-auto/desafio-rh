@@ -3,7 +3,7 @@ id: F1-S03
 title: API /api/documents (POST upload + GET listagem por tenant)
 phase: F1
 task_ref: null
-status: blocked
+status: available
 priority: high
 estimated_size: M
 agent_id: null

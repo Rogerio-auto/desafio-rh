@@ -3,13 +3,13 @@ id: F1-S02
 title: Expor ingestBuffer e reaproveitar pipeline na CLI
 phase: F1
 task_ref: null
-status: review
+status: done
 priority: high
 estimated_size: S
 agent_id: null
 claimed_at: 2026-06-01T19:49:59Z
 completed_at: 2026-06-01T19:55:21Z
-pr_url: null
+pr_url: https://github.com/Rogerio-auto/desafio-rh/pull/2
 depends_on:
   - F1-S01
 blocks:
