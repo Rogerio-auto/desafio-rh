@@ -3,11 +3,11 @@ id: F1-S03
 title: API /api/documents (POST upload + GET listagem por tenant)
 phase: F1
 task_ref: null
-status: available
+status: in-progress
 priority: high
 estimated_size: M
 agent_id: null
-claimed_at: null
+claimed_at: 2026-06-01T22:13:17Z
 completed_at: null
 pr_url: null
 depends_on:
@@ -19,7 +19,6 @@ source_docs:
   - ARCHITECTURE.md
   - CLAUDE.md
 ---
-
 # F1-S03 — Documents API (upload + listagem)
 
 ## Objetivo
