@@ -1,4 +1,4 @@
-import { desc, eq } from "drizzle-orm";
+import { and, desc, eq, lt, or, sql as drizzleSql } from "drizzle-orm";
 import { NextResponse, type NextRequest } from "next/server";
 import { z } from "zod";
 import { getEnv } from "@/lib/env";
@@ -311,8 +311,6 @@ export async function GET(req: NextRequest) {
   try {
     // We fetch limit+1 to determine if there is a next page.
     // Ordering is createdAt DESC, id DESC for stable cursor-based pagination.
-    const { and, lt, or, sql: drizzleSql } = await import("drizzle-orm");
-
     const baseFilter = eq(documents.tenantId, tenant.id);
 
     let rows;
