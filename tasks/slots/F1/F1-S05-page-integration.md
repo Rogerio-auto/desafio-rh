@@ -3,11 +3,11 @@ id: F1-S05
 title: Integrar upload na page principal + ADR + README
 phase: F1
 task_ref: null
-status: available
+status: in-progress
 priority: medium
 estimated_size: S
 agent_id: null
-claimed_at: null
+claimed_at: 2026-06-01T23:57:33Z
 completed_at: null
 pr_url: null
 depends_on:
@@ -18,7 +18,6 @@ source_docs:
   - ARCHITECTURE.md
   - CLAUDE.md
 ---
-
 # F1-S05 — Integração final na page + documentação
 
 ## Objetivo
