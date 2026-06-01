@@ -38,6 +38,7 @@ const EnvSchema = z.object({
         .filter(Boolean),
     ),
   MAX_QUESTION_LENGTH: positiveInt(2000),
+  MAX_UPLOAD_SIZE_MB: positiveInt(10),
   OPENAI_COMPATIBLE_BASE_URL: z
     .string()
     .url()
