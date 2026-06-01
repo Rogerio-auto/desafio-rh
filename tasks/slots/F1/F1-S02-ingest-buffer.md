@@ -3,7 +3,7 @@ id: F1-S02
 title: Expor ingestBuffer e reaproveitar pipeline na CLI
 phase: F1
 task_ref: null
-status: blocked
+status: available
 priority: high
 estimated_size: S
 agent_id: null
