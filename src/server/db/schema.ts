@@ -18,6 +18,19 @@ import {
  */
 export const EMBEDDING_DIMENSION = 1536;
 
+/**
+ * Lifecycle of a `documents` row. `pending`/`processing` are reachable
+ * only via the UI upload path (F1-S03+); the CLI ingestor inserts directly
+ * as `ready`. `failed` carries a short message in `documents.error`.
+ */
+export const DOCUMENT_STATUSES = [
+  "pending",
+  "processing",
+  "ready",
+  "failed",
+] as const;
+export type DocumentStatus = (typeof DOCUMENT_STATUSES)[number];
+
 export const tenants = pgTable(
   "tenants",
   {
@@ -45,7 +58,12 @@ export const documents = pgTable(
     filePath: text("file_path").notNull(),
     mimeType: text("mime_type").notNull(),
     contentHash: text("content_hash").notNull(),
-    status: text("status").notNull().default("ready"),
+    status: text("status").notNull().default("ready").$type<DocumentStatus>(),
+    error: text("error"),
+    processedAt: timestamp("processed_at", {
+      withTimezone: true,
+      mode: "date",
+    }),
     createdAt: timestamp("created_at", { withTimezone: true, mode: "date" })
       .notNull()
       .defaultNow(),
@@ -56,6 +74,7 @@ export const documents = pgTable(
   (t) => [
     uniqueIndex("documents_tenant_hash_unique").on(t.tenantId, t.contentHash),
     index("documents_tenant_idx").on(t.tenantId),
+    index("documents_tenant_status_idx").on(t.tenantId, t.status),
   ],
 );
 
