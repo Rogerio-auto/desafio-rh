@@ -3,12 +3,12 @@ id: F1-S04
 title: Componentes React de upload e listagem de documentos
 phase: F1
 task_ref: null
-status: available
+status: review
 priority: medium
 estimated_size: M
 agent_id: null
-claimed_at: null
-completed_at: null
+claimed_at: 2026-06-01T23:47:05Z
+completed_at: 2026-06-01T23:51:58Z
 pr_url: null
 depends_on:
   - F1-S03
@@ -18,7 +18,6 @@ source_docs:
   - PRD.md
   - CLAUDE.md
 ---
-
 # F1-S04 — Upload UI
 
 ## Objetivo
