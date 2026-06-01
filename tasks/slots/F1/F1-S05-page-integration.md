@@ -3,7 +3,7 @@ id: F1-S05
 title: Integrar upload na page principal + ADR + README
 phase: F1
 task_ref: null
-status: blocked
+status: available
 priority: medium
 estimated_size: S
 agent_id: null
