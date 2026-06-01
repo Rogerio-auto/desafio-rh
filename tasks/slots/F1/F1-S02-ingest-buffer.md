@@ -3,11 +3,11 @@ id: F1-S02
 title: Expor ingestBuffer e reaproveitar pipeline na CLI
 phase: F1
 task_ref: null
-status: available
+status: in-progress
 priority: high
 estimated_size: S
 agent_id: null
-claimed_at: null
+claimed_at: 2026-06-01T19:49:59Z
 completed_at: null
 pr_url: null
 depends_on:
@@ -19,7 +19,6 @@ source_docs:
   - ARCHITECTURE.md
   - CLAUDE.md
 ---
-
 # F1-S02 — Ingestão a partir de buffer
 
 ## Objetivo
