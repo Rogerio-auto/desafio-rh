@@ -3,13 +3,13 @@ id: F1-S03
 title: API /api/documents (POST upload + GET listagem por tenant)
 phase: F1
 task_ref: null
-status: review
+status: done
 priority: high
 estimated_size: M
 agent_id: null
 claimed_at: 2026-06-01T22:13:17Z
 completed_at: 2026-06-01T22:24:28Z
-pr_url: null
+pr_url: https://github.com/Rogerio-auto/desafio-rh/pull/3
 depends_on:
   - F1-S02
 blocks:

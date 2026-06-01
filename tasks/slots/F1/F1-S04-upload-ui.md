@@ -3,7 +3,7 @@ id: F1-S04
 title: Componentes React de upload e listagem de documentos
 phase: F1
 task_ref: null
-status: blocked
+status: available
 priority: medium
 estimated_size: M
 agent_id: null
