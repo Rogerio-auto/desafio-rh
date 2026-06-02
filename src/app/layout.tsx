@@ -7,11 +7,7 @@ export const metadata: Metadata = {
     "Atendimento multi-tenant de dúvidas internas de RH para NorteVerde, Aurora e Vitalys.",
 };
 
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="pt-BR" className="dark">
       <body className="bg-background text-foreground antialiased min-h-screen">

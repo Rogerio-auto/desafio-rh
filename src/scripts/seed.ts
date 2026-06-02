@@ -12,10 +12,7 @@ async function main() {
 
 main()
   .catch((err) => {
-    logger.error(
-      { err: err instanceof Error ? err.message : String(err) },
-      "seed_fatal",
-    );
+    logger.error({ err: err instanceof Error ? err.message : String(err) }, "seed_fatal");
     process.exitCode = 1;
   })
   .finally(async () => {

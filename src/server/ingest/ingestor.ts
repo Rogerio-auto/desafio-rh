@@ -7,10 +7,7 @@ import { getEnv } from "@/lib/env";
 import { generateEmbeddings } from "@/server/ai/embeddings";
 import { chunkText } from "@/server/rag/chunker";
 import { logger } from "@/server/logging/logger";
-import {
-  getTenantConfigByFolder,
-  TENANT_CONFIGS,
-} from "@/server/tenants/config";
+import { getTenantConfigByFolder, TENANT_CONFIGS } from "@/server/tenants/config";
 import { getOrCreateTenant } from "@/server/tenants/service";
 import { extractTextFromBuffer, getMimeType, isSupportedFile } from "./parsers";
 import { sha256Hex } from "./hash";
@@ -66,9 +63,7 @@ function truncateError(message: string): string {
  * short out-of-transaction UPDATE to mark the row as `failed`. Drizzle does
  * not support savepoints, so nested transactions are not viable here.
  */
-export async function ingestBuffer(
-  opts: IngestBufferOptions,
-): Promise<IngestFileResult> {
+export async function ingestBuffer(opts: IngestBufferOptions): Promise<IngestFileResult> {
   const { tenant, buffer, fileName, embedFn } = opts;
   const env = getEnv();
   const startMs = Date.now();
@@ -92,19 +87,11 @@ export async function ingestBuffer(
   const existing = await db
     .select({ id: documents.id })
     .from(documents)
-    .where(
-      and(
-        eq(documents.tenantId, tenant.id),
-        eq(documents.contentHash, contentHash),
-      ),
-    )
+    .where(and(eq(documents.tenantId, tenant.id), eq(documents.contentHash, contentHash)))
     .limit(1);
 
   if (existing[0]) {
-    log.info(
-      { contentHash: contentHash.slice(0, 12) },
-      "ingest_skipped_duplicate",
-    );
+    log.info({ contentHash: contentHash.slice(0, 12) }, "ingest_skipped_duplicate");
     return { fileName, filePath: "", status: "skipped_duplicate" };
   }
 
@@ -113,9 +100,7 @@ export async function ingestBuffer(
   try {
     text = await extractTextFromBuffer(fileName, buffer);
   } catch (err) {
-    const reason = truncateError(
-      err instanceof Error ? err.message : String(err),
-    );
+    const reason = truncateError(err instanceof Error ? err.message : String(err));
     return { fileName, filePath: "", status: "failed", reason };
   }
 
@@ -144,9 +129,7 @@ export async function ingestBuffer(
   try {
     const vectors = await embedFn(chunks.map((c) => c.content));
     if (vectors.length !== chunks.length) {
-      throw new Error(
-        `Embedding count mismatch: ${vectors.length} vs ${chunks.length}`,
-      );
+      throw new Error(`Embedding count mismatch: ${vectors.length} vs ${chunks.length}`);
     }
 
     await db.transaction(async (tx) => {
@@ -208,9 +191,7 @@ export async function ingestBuffer(
       documentId,
     };
   } catch (err) {
-    const reason = truncateError(
-      err instanceof Error ? err.message : String(err),
-    );
+    const reason = truncateError(err instanceof Error ? err.message : String(err));
     const latencyMs = Date.now() - startMs;
 
     log.error(
@@ -253,8 +234,8 @@ export async function ingestDirectory(rootDir: string): Promise<IngestReport> {
     throw new Error(`Documents directory does not exist: ${absRoot}`);
   }
 
-  const subdirs = (await fs.readdir(absRoot, { withFileTypes: true })).filter(
-    (d) => d.isDirectory(),
+  const subdirs = (await fs.readdir(absRoot, { withFileTypes: true })).filter((d) =>
+    d.isDirectory(),
   );
 
   const tenantResults: IngestTenantResult[] = [];

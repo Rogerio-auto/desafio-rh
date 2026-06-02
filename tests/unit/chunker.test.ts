@@ -20,9 +20,7 @@ describe("chunker", () => {
       overlapTokens: 20,
     });
     expect(chunks.length).toBeGreaterThan(1);
-    expect(chunks.map((c) => c.index)).toEqual(
-      chunks.map((_, i) => i),
-    );
+    expect(chunks.map((c) => c.index)).toEqual(chunks.map((_, i) => i));
     for (const c of chunks) {
       expect(c.tokenCount).toBeLessThanOrEqual(120);
       expect(c.content.length).toBeGreaterThan(0);
@@ -30,6 +28,8 @@ describe("chunker", () => {
   });
 
   it("returns empty array on empty input", () => {
-    expect(chunkText("   \n\n  ", { chunkSizeTokens: 200, overlapTokens: 10 })).toEqual([]);
+    expect(chunkText("   \n\n  ", { chunkSizeTokens: 200, overlapTokens: 10 })).toEqual(
+      [],
+    );
   });
 });

@@ -148,9 +148,7 @@ export function ChatPanel({ tenants }: ChatPanelProps) {
           </div>
           {uniqueSources.length > 0 ? (
             <div className="flex flex-col gap-2 border-t border-border pt-4">
-              <span className="text-xs uppercase tracking-wide text-muted">
-                Fontes
-              </span>
+              <span className="text-xs uppercase tracking-wide text-muted">Fontes</span>
               <ul className="flex flex-col gap-1">
                 {uniqueSources.map((s) => (
                   <li

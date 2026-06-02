@@ -25,6 +25,7 @@ TypeScript de ponta a ponta.
 - [Estrutura](#estrutura)
 - [API](#api)
 - [Ingestão](#ingestão)
+- [Variáveis de ambiente](#variáveis-de-ambiente)
 - [Custos](#custos)
 - [Segurança](#segurança)
 - [Solução de problemas](#solução-de-problemas)
@@ -148,8 +149,13 @@ npm run db:migrate
 # 5. Crie os tenants
 npm run db:seed
 
-# 6. Ingerir documentos
+# 6. Ingerir documentos (opção A — linha de comando)
 npm run ingest -- --docs-dir ../documentos
+
+# 6b. Ingerir documentos (opção B — via UI)
+#   Suba a UI e use a seção "Gerenciar documentos" para fazer upload
+#   de arquivos individuais pelo browser. Formatos aceitos: PDF, DOCX,
+#   XLSX, MD, TXT (até MAX_UPLOAD_SIZE_MB, padrão 10 MB).
 
 # 7. Suba a UI
 npm run dev
@@ -249,6 +255,72 @@ Erros:
 | 404 | Tenant desconhecido |
 | 500 | Erro interno (sem vazar detalhes para o cliente) |
 
+### `POST /api/documents`
+
+Faz upload e ingere um documento para um tenant. Aceita `multipart/form-data`.
+
+| Campo (form) | Tipo | Descrição |
+|---|---|---|
+| `tenant` | `string` | Slug do tenant (`norteverde`, `aurora`, `vitalys`) |
+| `file` | `File` | Arquivo a ingerir. Formatos: PDF, DOCX, XLSX, MD, TXT |
+
+Resposta de sucesso (`200`):
+
+```json
+{
+  "documentId": "uuid",
+  "status": "ready",
+  "chunks": 14
+}
+```
+
+Resposta de duplicata (`200`):
+
+```json
+{ "status": "duplicate" }
+```
+
+Erros:
+
+| Status | Quando |
+|---|---|
+| 400 | Tenant ausente, inválido ou arquivo ausente |
+| 413 | Arquivo excede `MAX_UPLOAD_SIZE_MB` |
+| 415 | Formato de arquivo não suportado |
+| 500 | Erro interno de parsing ou embedding |
+
+### `GET /api/documents`
+
+Lista documentos de um tenant com paginação por cursor.
+
+Query params:
+
+| Param | Obrigatório | Descrição |
+|---|---|---|
+| `tenant` | sim | Slug do tenant |
+| `cursor` | não | Cursor opaco da página anterior |
+
+Resposta (`200`):
+
+```json
+{
+  "items": [
+    {
+      "id": "uuid",
+      "fileName": "politica-ferias.pdf",
+      "mimeType": "application/pdf",
+      "status": "ready",
+      "error": null,
+      "processedAt": "2026-06-01T20:00:00.000Z",
+      "createdAt": "2026-06-01T19:59:50.000Z"
+    }
+  ],
+  "nextCursor": null
+}
+```
+
+Valores possíveis de `status`: `queued` | `processing` | `ready` | `failed`.
+
 ### `GET /api/health`
 
 Retorna `200` quando consegue um `SELECT 1` no Postgres. Inclui também a
@@ -273,6 +345,28 @@ O comando `npm run ingest -- --docs-dir <path>`:
 4. Loga um sumário JSON por tenant.
 
 Re-rodar o comando não duplica nada.
+
+---
+
+## Variáveis de ambiente
+
+Copie `.env.example` para `.env` e ajuste os valores. As principais variáveis:
+
+| Variável | Default | Descrição |
+|---|---|---|
+| `DATABASE_URL` | — | URL de conexão ao Postgres (requerida) |
+| `OPENAI_COMPATIBLE_BASE_URL` | `https://api.openai.com/v1` | Base URL da API compatível com OpenAI |
+| `OPENAI_COMPATIBLE_API_KEY` | — | Chave da API (requerida) |
+| `LLM_MODEL` | `gpt-4o-mini` | Modelo de linguagem para geração de respostas |
+| `EMBEDDING_MODEL` | `text-embedding-3-small` | Modelo para geração de embeddings |
+| `EMBEDDING_DIMENSIONS` | `1536` | Dimensão dos vetores (deve coincidir com o modelo) |
+| `ALLOWED_ORIGINS` | `http://localhost:3000` | Origins permitidas no CORS (nunca `*`) |
+| `MAX_QUESTION_LENGTH` | `2000` | Limite de caracteres por pergunta |
+| `MAX_UPLOAD_SIZE_MB` | `10` | Tamanho máximo de arquivo para upload via UI (MB) |
+| `RAG_TOP_K` | `5` | Número de chunks recuperados por consulta |
+| `LOG_LEVEL` | `info` | Nível de log Pino (`debug`, `info`, `warn`, `error`) |
+
+Veja `.env.example` para a lista completa com comentários.
 
 ---
 

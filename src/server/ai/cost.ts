@@ -25,13 +25,11 @@ export function estimateCostUsd(input: {
   const env = getEnv();
   const embeddingCost =
     (input.embeddingTokens * env.EMBEDDING_COST_PER_1M_TOKENS) / PER_MILLION;
-  const inputCost =
-    (input.inputTokens * env.LLM_INPUT_COST_PER_1M_TOKENS) / PER_MILLION;
+  const inputCost = (input.inputTokens * env.LLM_INPUT_COST_PER_1M_TOKENS) / PER_MILLION;
   const outputCost =
     (input.outputTokens * env.LLM_OUTPUT_COST_PER_1M_TOKENS) / PER_MILLION;
   const totalUsd =
-    Math.round((embeddingCost + inputCost + outputCost) * 1_000_000) /
-    1_000_000;
+    Math.round((embeddingCost + inputCost + outputCost) * 1_000_000) / 1_000_000;
   return {
     embeddingTokens: input.embeddingTokens,
     inputTokens: input.inputTokens,

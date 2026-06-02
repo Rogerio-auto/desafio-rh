@@ -10,10 +10,7 @@ import { isSupportedFile } from "@/server/ingest/parsers";
 import { logger } from "@/server/logging/logger";
 import { buildCorsHeaders, isOriginAllowed } from "@/server/security/cors";
 import { TENANT_SLUGS } from "@/server/tenants/config";
-import {
-  getOrCreateTenant,
-  TenantNotFoundError,
-} from "@/server/tenants/service";
+import { getOrCreateTenant, TenantNotFoundError } from "@/server/tenants/service";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -44,7 +41,9 @@ interface CursorPayload {
 }
 
 function encodeCursor(createdAt: Date, id: string): string {
-  return Buffer.from(JSON.stringify({ createdAt: createdAt.toISOString(), id })).toString("base64url");
+  return Buffer.from(JSON.stringify({ createdAt: createdAt.toISOString(), id })).toString(
+    "base64url",
+  );
 }
 
 function decodeCursor(raw: string): CursorPayload {
@@ -149,7 +148,10 @@ export async function POST(req: NextRequest) {
   if (!isSupportedFile(fileName)) {
     routeLog.warn({ tenantSlug, fileName }, "documents_upload_unsupported_extension");
     return NextResponse.json(
-      { error: "Tipo de arquivo não suportado. Formatos aceitos: pdf, docx, xlsx, md, txt" },
+      {
+        error:
+          "Tipo de arquivo não suportado. Formatos aceitos: pdf, docx, xlsx, md, txt",
+      },
       { status: 415, headers: corsHeaders },
     );
   }
@@ -360,9 +362,7 @@ export async function GET(req: NextRequest) {
 
     const lastItem = items[items.length - 1];
     const nextCursor =
-      hasNextPage && lastItem
-        ? encodeCursor(lastItem.createdAt, lastItem.id)
-        : null;
+      hasNextPage && lastItem ? encodeCursor(lastItem.createdAt, lastItem.id) : null;
 
     return NextResponse.json(
       {
