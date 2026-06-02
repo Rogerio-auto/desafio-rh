@@ -2,11 +2,7 @@ import "../helpers/test-env";
 import { readFileSync } from "node:fs";
 import { resolve } from "node:path";
 import { describe, expect, expectTypeOf, it } from "vitest";
-import {
-  DOCUMENT_STATUSES,
-  type DocumentStatus,
-  documents,
-} from "@/server/db/schema";
+import { DOCUMENT_STATUSES, type DocumentStatus, documents } from "@/server/db/schema";
 
 const MIGRATION_PATH = resolve(
   __dirname,
@@ -19,12 +15,7 @@ const JOURNAL_PATH = resolve(
 
 describe("documents upload schema", () => {
   it("exposes the four canonical statuses in lifecycle order", () => {
-    expect(DOCUMENT_STATUSES).toEqual([
-      "pending",
-      "processing",
-      "ready",
-      "failed",
-    ]);
+    expect(DOCUMENT_STATUSES).toEqual(["pending", "processing", "ready", "failed"]);
   });
 
   it("derives DocumentStatus as the exact literal union", () => {

@@ -24,11 +24,7 @@ export async function resolveTenant(slug: unknown): Promise<Tenant> {
   if (!isValidTenantSlug(slug)) {
     throw new TenantNotFoundError(String(slug));
   }
-  const row = await db
-    .select()
-    .from(tenants)
-    .where(eq(tenants.slug, slug))
-    .limit(1);
+  const row = await db.select().from(tenants).where(eq(tenants.slug, slug)).limit(1);
   const tenant = row[0];
   if (!tenant) {
     throw new TenantNotFoundError(slug);
@@ -41,11 +37,7 @@ export async function getOrCreateTenant(slug: string): Promise<Tenant> {
   if (!config) {
     throw new TenantNotFoundError(slug);
   }
-  const existing = await db
-    .select()
-    .from(tenants)
-    .where(eq(tenants.slug, slug))
-    .limit(1);
+  const existing = await db.select().from(tenants).where(eq(tenants.slug, slug)).limit(1);
   if (existing[0]) return existing[0];
   const inserted = await db
     .insert(tenants)

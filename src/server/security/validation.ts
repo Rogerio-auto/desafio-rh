@@ -14,7 +14,10 @@ export function getChatRequestSchema() {
       .string()
       .trim()
       .min(3, "Pergunta muito curta")
-      .max(env.MAX_QUESTION_LENGTH, `Pergunta excede ${env.MAX_QUESTION_LENGTH} caracteres`),
+      .max(
+        env.MAX_QUESTION_LENGTH,
+        `Pergunta excede ${env.MAX_QUESTION_LENGTH} caracteres`,
+      ),
   });
 }
 

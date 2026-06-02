@@ -61,9 +61,8 @@ describe("runChat pipeline", () => {
       }),
     }));
     vi.doMock("@/server/ai/chat", async () => {
-      const real = await vi.importActual<typeof import("@/server/ai/chat")>(
-        "@/server/ai/chat",
-      );
+      const real =
+        await vi.importActual<typeof import("@/server/ai/chat")>("@/server/ai/chat");
       return {
         ...real,
         generateChatCompletion: vi.fn().mockResolvedValue({
@@ -121,9 +120,8 @@ describe("runChat pipeline", () => {
       }),
     }));
     vi.doMock("@/server/ai/chat", async () => {
-      const real = await vi.importActual<typeof import("@/server/ai/chat")>(
-        "@/server/ai/chat",
-      );
+      const real =
+        await vi.importActual<typeof import("@/server/ai/chat")>("@/server/ai/chat");
       return {
         ...real,
         generateChatCompletion: vi.fn().mockResolvedValue({
@@ -153,9 +151,8 @@ describe("runChat pipeline", () => {
       generateQueryEmbedding: vi.fn(),
     }));
     vi.doMock("@/server/ai/chat", async () => {
-      const real = await vi.importActual<typeof import("@/server/ai/chat")>(
-        "@/server/ai/chat",
-      );
+      const real =
+        await vi.importActual<typeof import("@/server/ai/chat")>("@/server/ai/chat");
       return {
         ...real,
         generateChatCompletion: vi.fn(),

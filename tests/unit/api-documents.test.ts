@@ -39,11 +39,9 @@ function makeFormData(fields: {
   const form = new FormData();
   if (fields.tenant !== undefined) form.set("tenant", fields.tenant);
   if (fields.fileName !== undefined) {
-    const file = new File(
-      [fields.content ?? "content de teste"],
-      fields.fileName,
-      { type: fields.contentType ?? "text/plain" },
-    );
+    const file = new File([fields.content ?? "content de teste"], fields.fileName, {
+      type: fields.contentType ?? "text/plain",
+    });
     form.set("file", file);
   }
   return form;
@@ -87,10 +85,7 @@ async function makePostRequest(opts: {
 }
 
 /** Build a NextRequest for GET with query params. */
-function makeGetRequest(
-  params: Record<string, string>,
-  origin?: string,
-): NextRequest {
+function makeGetRequest(params: Record<string, string>, origin?: string): NextRequest {
   const url = new URL("http://localhost:3000/api/documents");
   for (const [k, v] of Object.entries(params)) url.searchParams.set(k, v);
   const headers: Record<string, string> = {};
@@ -102,9 +97,7 @@ function makeGetRequest(
 // Mock factories
 // ---------------------------------------------------------------------------
 
-function makeIngestResult(
-  partial: Partial<IngestFileResult> = {},
-): IngestFileResult {
+function makeIngestResult(partial: Partial<IngestFileResult> = {}): IngestFileResult {
   return {
     fileName: "doc.txt",
     filePath: "",
@@ -141,7 +134,11 @@ describe("POST /api/documents", () => {
 
   it("returns 403 when origin is not allowed", async () => {
     const { POST } = await import("@/app/api/documents/route");
-    const req = await makePostRequest({ origin: "https://evil.example", tenant: "norteverde", fileName: "a.txt" });
+    const req = await makePostRequest({
+      origin: "https://evil.example",
+      tenant: "norteverde",
+      fileName: "a.txt",
+    });
     const res = await POST(req);
     expect(res.status).toBe(403);
     const body = (await res.json()) as { error: string };
@@ -189,9 +186,9 @@ describe("POST /api/documents", () => {
 
     vi.doMock("@/server/tenants/service", () => ({
       TenantNotFoundError: MockTenantNotFoundError,
-      getOrCreateTenant: vi.fn().mockRejectedValue(
-        new MockTenantNotFoundError("norteverde"),
-      ),
+      getOrCreateTenant: vi
+        .fn()
+        .mockRejectedValue(new MockTenantNotFoundError("norteverde")),
     }));
 
     const { POST } = await import("@/app/api/documents/route");
@@ -219,7 +216,11 @@ describe("POST /api/documents", () => {
     }));
 
     const { POST } = await import("@/app/api/documents/route");
-    const req = await makePostRequest({ tenant: "norteverde", fileName: "virus.exe", content: "MZ" });
+    const req = await makePostRequest({
+      tenant: "norteverde",
+      fileName: "virus.exe",
+      content: "MZ",
+    });
     const res = await POST(req);
     expect(res.status).toBe(415);
   });

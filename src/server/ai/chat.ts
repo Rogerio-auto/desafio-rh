@@ -24,10 +24,7 @@ export interface ContextChunk {
   content: string;
 }
 
-export function buildUserPrompt(
-  question: string,
-  chunks: ContextChunk[],
-): string {
+export function buildUserPrompt(question: string, chunks: ContextChunk[]): string {
   if (chunks.length === 0) {
     return `PERGUNTA: ${question}\n\nCONTEXTO: (nenhum documento relevante encontrado)`;
   }

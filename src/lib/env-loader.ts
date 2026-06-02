@@ -16,10 +16,9 @@ export function loadEnv(): void {
   if (loaded) return;
   loaded = true;
 
-  const candidates = [
-    process.env.DOTENV_PATH,
-    resolve(process.cwd(), ".env"),
-  ].filter((p): p is string => Boolean(p));
+  const candidates = [process.env.DOTENV_PATH, resolve(process.cwd(), ".env")].filter(
+    (p): p is string => Boolean(p),
+  );
 
   for (const filePath of candidates) {
     if (!existsSync(filePath)) continue;

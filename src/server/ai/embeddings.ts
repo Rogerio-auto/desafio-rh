@@ -12,9 +12,7 @@ export interface EmbeddingResult {
  * OpenAI Embeddings endpoint accepts up to ~2048 inputs per request, but we
  * cap at 96 to stay well within per-provider limits.
  */
-export async function generateEmbeddings(
-  inputs: string[],
-): Promise<EmbeddingResult> {
+export async function generateEmbeddings(inputs: string[]): Promise<EmbeddingResult> {
   if (inputs.length === 0) {
     return { vectors: [], inputTokens: 0 };
   }

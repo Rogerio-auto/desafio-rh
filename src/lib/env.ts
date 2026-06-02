@@ -18,9 +18,7 @@ const positiveInt = (defaultValue: number) =>
     .pipe(z.number().int().positive());
 
 const EnvSchema = z.object({
-  NODE_ENV: z
-    .enum(["development", "test", "production"])
-    .default("development"),
+  NODE_ENV: z.enum(["development", "test", "production"]).default("development"),
   APP_URL: z.string().url().default("http://localhost:3000"),
   DATABASE_URL: z
     .string()
@@ -39,10 +37,7 @@ const EnvSchema = z.object({
     ),
   MAX_QUESTION_LENGTH: positiveInt(2000),
   MAX_UPLOAD_SIZE_MB: positiveInt(10),
-  OPENAI_COMPATIBLE_BASE_URL: z
-    .string()
-    .url()
-    .default("https://api.openai.com/v1"),
+  OPENAI_COMPATIBLE_BASE_URL: z.string().url().default("https://api.openai.com/v1"),
   OPENAI_COMPATIBLE_API_KEY: z.string().min(1, "OPENAI_COMPATIBLE_API_KEY is required"),
   LLM_MODEL: z.string().default("gpt-4o-mini"),
   EMBEDDING_MODEL: z.string().default("text-embedding-3-small"),
@@ -55,9 +50,7 @@ const EnvSchema = z.object({
   LLM_INPUT_COST_PER_1M_TOKENS: numeric(0.15),
   LLM_OUTPUT_COST_PER_1M_TOKENS: numeric(0.6),
   EMBEDDING_COST_PER_1M_TOKENS: numeric(0.02),
-  LOG_LEVEL: z
-    .enum(["fatal", "error", "warn", "info", "debug", "trace"])
-    .default("info"),
+  LOG_LEVEL: z.enum(["fatal", "error", "warn", "info", "debug", "trace"]).default("info"),
 });
 
 export type Env = z.infer<typeof EnvSchema>;

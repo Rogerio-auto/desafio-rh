@@ -23,12 +23,7 @@ export const EMBEDDING_DIMENSION = 1536;
  * only via the UI upload path (F1-S03+); the CLI ingestor inserts directly
  * as `ready`. `failed` carries a short message in `documents.error`.
  */
-export const DOCUMENT_STATUSES = [
-  "pending",
-  "processing",
-  "ready",
-  "failed",
-] as const;
+export const DOCUMENT_STATUSES = ["pending", "processing", "ready", "failed"] as const;
 export type DocumentStatus = (typeof DOCUMENT_STATUSES)[number];
 
 export const tenants = pgTable(
@@ -99,8 +94,7 @@ export const documentChunks = pgTable(
   (t) => [
     index("chunks_tenant_idx").on(t.tenantId),
     index("chunks_document_idx").on(t.documentId),
-    index("chunks_embedding_idx")
-      .using("hnsw", t.embedding.op("vector_cosine_ops")),
+    index("chunks_embedding_idx").using("hnsw", t.embedding.op("vector_cosine_ops")),
   ],
 );
 
@@ -111,7 +105,9 @@ export const chatInteractions = pgTable("chat_interactions", {
     .references(() => tenants.id, { onDelete: "cascade" }),
   question: text("question").notNull(),
   answer: text("answer"),
-  sources: jsonb("sources").notNull().default(sql`'[]'::jsonb`),
+  sources: jsonb("sources")
+    .notNull()
+    .default(sql`'[]'::jsonb`),
   latencyMs: integer("latency_ms").notNull(),
   estimatedCostUsd: text("estimated_cost_usd").notNull().default("0"),
   status: text("status").notNull(),

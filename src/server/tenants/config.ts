@@ -43,9 +43,7 @@ export function getTenantConfigBySlug(slug: string): TenantConfig | undefined {
   return TENANT_CONFIGS.find((t) => t.slug === slug);
 }
 
-export function getTenantConfigByFolder(
-  folderName: string,
-): TenantConfig | undefined {
+export function getTenantConfigByFolder(folderName: string): TenantConfig | undefined {
   const normalized = folderName.trim().toLowerCase();
   return TENANT_CONFIGS.find((t) =>
     t.documentFolders.some((f) => f.toLowerCase() === normalized),

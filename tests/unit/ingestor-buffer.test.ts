@@ -77,9 +77,11 @@ function createMockDb() {
 
     _limitResult: Promise.resolve([] as Array<{ id: string }>),
 
-    transaction: vi.fn().mockImplementation(async (fn: (tx: typeof db) => Promise<void>) => {
-      await fn(db);
-    }),
+    transaction: vi
+      .fn()
+      .mockImplementation(async (fn: (tx: typeof db) => Promise<void>) => {
+        await fn(db);
+      }),
 
     insert: vi.fn().mockReturnThis(),
     values: vi.fn().mockImplementation(function (
@@ -101,7 +103,11 @@ function createMockDb() {
           // chunk insert — no returning needed
           const chunks = Array.isArray(valOrArr) ? valOrArr : [valOrArr];
           (chunks as MockChunk[]).forEach((c) => {
-            storedChunks.push({ id: randomUUID(), tenantId: c.tenantId ?? "", documentId: (c as MockChunk).documentId ?? "" });
+            storedChunks.push({
+              id: randomUUID(),
+              tenantId: c.tenantId ?? "",
+              documentId: (c as MockChunk).documentId ?? "",
+            });
           });
           return Promise.resolve([]);
         }),
@@ -131,16 +137,21 @@ describe("ingestBuffer", () => {
 
     vi.doMock("@/server/db/client", () => ({ db: mockDb }));
     vi.doMock("@/server/rag/chunker", () => ({
-      chunkText: vi.fn().mockReturnValue([
-        { index: 0, content: "chunk one", tokenCount: 3 },
-      ]),
+      chunkText: vi
+        .fn()
+        .mockReturnValue([{ index: 0, content: "chunk one", tokenCount: 3 }]),
     }));
 
     const { ingestBuffer } = await import("@/server/ingest/ingestor");
     const tenant = makeTenant("norteverde");
     const buffer = Buffer.from("Política de férias da NorteVerde.", "utf8");
 
-    const result = await ingestBuffer({ tenant, buffer, fileName: "politica.txt", embedFn: fakeEmbedFn });
+    const result = await ingestBuffer({
+      tenant,
+      buffer,
+      fileName: "politica.txt",
+      embedFn: fakeEmbedFn,
+    });
 
     expect(result.status).toBe("ingested");
     expect(result.documentId).toBeDefined();
@@ -160,7 +171,12 @@ describe("ingestBuffer", () => {
     const tenant = makeTenant("norteverde");
     const buffer = Buffer.from("Política de férias da NorteVerde.", "utf8");
 
-    const first = await ingestBuffer({ tenant, buffer, fileName: "politica.txt", embedFn: embedSpy });
+    const first = await ingestBuffer({
+      tenant,
+      buffer,
+      fileName: "politica.txt",
+      embedFn: embedSpy,
+    });
 
     expect(first.status).toBe("skipped_duplicate");
     // No embedding should have been generated
@@ -189,17 +205,27 @@ describe("ingestBuffer", () => {
 
     vi.doMock("@/server/db/client", () => ({ db: mockDb }));
     vi.doMock("@/server/rag/chunker", () => ({
-      chunkText: vi.fn().mockReturnValue([
-        { index: 0, content: "chunk one", tokenCount: 3 },
-      ]),
+      chunkText: vi
+        .fn()
+        .mockReturnValue([{ index: 0, content: "chunk one", tokenCount: 3 }]),
     }));
 
     const { ingestBuffer } = await import("@/server/ingest/ingestor");
     const tenant = makeTenant("norteverde");
     const buffer = Buffer.from("Política de férias da NorteVerde.", "utf8");
 
-    const first = await ingestBuffer({ tenant, buffer, fileName: "politica.txt", embedFn: countingEmbedFn });
-    const second = await ingestBuffer({ tenant, buffer, fileName: "politica.txt", embedFn: countingEmbedFn });
+    const first = await ingestBuffer({
+      tenant,
+      buffer,
+      fileName: "politica.txt",
+      embedFn: countingEmbedFn,
+    });
+    const second = await ingestBuffer({
+      tenant,
+      buffer,
+      fileName: "politica.txt",
+      embedFn: countingEmbedFn,
+    });
 
     expect(first.status).toBe("ingested");
     expect(second.status).toBe("skipped_duplicate");
@@ -224,17 +250,27 @@ describe("ingestBuffer", () => {
 
     vi.doMock("@/server/db/client", () => ({ db: mockDb }));
     vi.doMock("@/server/rag/chunker", () => ({
-      chunkText: vi.fn().mockReturnValue([
-        { index: 0, content: "chunk shared", tokenCount: 3 },
-      ]),
+      chunkText: vi
+        .fn()
+        .mockReturnValue([{ index: 0, content: "chunk shared", tokenCount: 3 }]),
     }));
 
     const { ingestBuffer } = await import("@/server/ingest/ingestor");
     const tenantA = makeTenant("norteverde");
     const tenantB = makeTenant("aurora");
 
-    const resA = await ingestBuffer({ tenant: tenantA, buffer, fileName: "shared.txt", embedFn: fakeEmbedFn });
-    const resB = await ingestBuffer({ tenant: tenantB, buffer, fileName: "shared.txt", embedFn: fakeEmbedFn });
+    const resA = await ingestBuffer({
+      tenant: tenantA,
+      buffer,
+      fileName: "shared.txt",
+      embedFn: fakeEmbedFn,
+    });
+    const resB = await ingestBuffer({
+      tenant: tenantB,
+      buffer,
+      fileName: "shared.txt",
+      embedFn: fakeEmbedFn,
+    });
 
     expect(resA.status).toBe("ingested");
     expect(resB.status).toBe("ingested");
@@ -255,7 +291,12 @@ describe("ingestBuffer", () => {
     // A text file with only whitespace → extractTextFromBuffer returns only whitespace
     const buffer = Buffer.from("   \n\t  ", "utf8");
 
-    const result = await ingestBuffer({ tenant, buffer, fileName: "empty.txt", embedFn: fakeEmbedFn });
+    const result = await ingestBuffer({
+      tenant,
+      buffer,
+      fileName: "empty.txt",
+      embedFn: fakeEmbedFn,
+    });
 
     expect(result.status).toBe("failed");
     expect(result.reason).toBe("empty_extracted_text");
@@ -269,7 +310,12 @@ describe("ingestBuffer", () => {
     const tenant = makeTenant("norteverde");
     const buffer = Buffer.from("any content", "utf8");
 
-    const result = await ingestBuffer({ tenant, buffer, fileName: "arquivo.exe", embedFn: fakeEmbedFn });
+    const result = await ingestBuffer({
+      tenant,
+      buffer,
+      fileName: "arquivo.exe",
+      embedFn: fakeEmbedFn,
+    });
 
     expect(result.status).toBe("failed");
     expect(result.reason).toBe("unsupported_extension");
@@ -281,16 +327,19 @@ describe("ingestBuffer", () => {
 
     vi.doMock("@/server/db/client", () => ({ db: mockDb }));
     vi.doMock("@/server/rag/chunker", () => ({
-      chunkText: vi.fn().mockReturnValue([
-        { index: 0, content: "texto", tokenCount: 2 },
-      ]),
+      chunkText: vi.fn().mockReturnValue([{ index: 0, content: "texto", tokenCount: 2 }]),
     }));
 
     const { ingestBuffer } = await import("@/server/ingest/ingestor");
     const tenant = makeTenant("vitalys");
     const buffer = Buffer.from("Documento de RH da Vitalys.", "utf8");
 
-    const result = await ingestBuffer({ tenant, buffer, fileName: "rh.txt", embedFn: fakeEmbedFn });
+    const result = await ingestBuffer({
+      tenant,
+      buffer,
+      fileName: "rh.txt",
+      embedFn: fakeEmbedFn,
+    });
 
     expect(result.status).toBe("ingested");
     expect(typeof result.documentId).toBe("string");
