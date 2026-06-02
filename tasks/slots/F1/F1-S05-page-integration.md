@@ -3,13 +3,13 @@ id: F1-S05
 title: Integrar upload na page principal + ADR + README
 phase: F1
 task_ref: null
-status: review
+status: done
 priority: medium
 estimated_size: S
 agent_id: null
 claimed_at: 2026-06-01T23:57:33Z
 completed_at: 2026-06-02T00:09:22Z
-pr_url: null
+pr_url: https://github.com/Rogerio-auto/desafio-rh/pull/5
 depends_on:
   - F1-S04
 blocks: []
